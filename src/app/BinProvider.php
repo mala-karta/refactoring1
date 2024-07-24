@@ -38,6 +38,12 @@ class BinProvider implements BinProviderInterface
 
     private function getBinResults(string $bin): string
     {
-        return file_get_contents($this->url . $bin);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Set curl to return the data instead of printing it to the browser.
+        curl_setopt($ch, CURLOPT_URL, $this->url . $bin);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return $data;
     }
 }

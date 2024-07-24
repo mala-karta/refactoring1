@@ -6,5 +6,5 @@ namespace src\infrastructure;
 
 interface RateProviderInterface
 {
-    public function getRateByCurrency(string $currency): int;
+    public function getRateByCurrency(string $currency): float;
 }

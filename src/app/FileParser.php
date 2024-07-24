@@ -73,7 +73,7 @@ class FileParser implements FileParserInterface
     {
         $rate = $this->rateProvider->getRateByCurrency($parsedRow->currency);
         $amount = (float)$parsedRow->amount;
-        return 'EUR' === $parsedRow->currency || 0 === $rate ? $amount : $amount / $rate;
+        return 'EUR' === $parsedRow->currency || 0 == $rate ? $amount : $amount / $rate;
     }
 
     private function getCountryCodeByBin(string $bin): ?string
