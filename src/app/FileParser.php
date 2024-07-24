@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace src\app;
 
 use src\infrastructure\BinProviderInterface;
@@ -67,10 +69,11 @@ class FileParser implements FileParserInterface
         }
     }
 
-    private function  getAmount(RowResponseModel $parsedRow): float
+    private function getAmount(RowResponseModel $parsedRow): float
     {
         $rate = $this->rateProvider->getRateByCurrency($parsedRow->currency);
-        return 'EUR' === $parsedRow->currency || 0 === $rate ? $parsedRow->amount : $parsedRow->amount / $rate;
+        $amount = (float)$parsedRow->amount;
+        return 'EUR' === $parsedRow->currency || 0 === $rate ? $amount : $amount / $rate;
     }
 
     private function getCountryCodeByBin(string $bin): ?string

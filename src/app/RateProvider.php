@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace src\app;
 
 use src\infrastructure\RateProviderInterface;
@@ -10,14 +12,23 @@ class RateProvider implements RateProviderInterface
 
     public function getRateByCurrency(string $currency): int
     {
-        $rate = @json_decode(file_get_contents($this->url), true)['rates'][$currency];
-        return (int)$rate;
+        $urlData = $this->getDataFromUrl();
+        if (!isset($urlData['rates']) || !isset($urlData['rates'][$currency])) {
+            return 0;
+        }
+
+        return (int)$urlData['rates'][$currency];
     }
 
     public function setUrl(string $rateUrl): self
     {
         $this->url = $rateUrl;
         return $this;
+    }
+
+    private function getDataFromUrl(): array
+    {
+        return @json_decode(file_get_contents($this->url), true);
     }
 
 }
