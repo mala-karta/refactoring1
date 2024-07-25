@@ -18,9 +18,6 @@ class BinProvider implements BinProviderInterface
 
     public function getCountryCodeByBin(string $bin): ?string
     {
-        //todo: remove 429 gag
-        //$countries = ['DK', 'LT', 'JP', null, "UK"];
-        //return $countries[rand(0, count($countries) - 1)];
         $binResults = $this->getBinResults($bin);
 
         if (!$binResults) {
